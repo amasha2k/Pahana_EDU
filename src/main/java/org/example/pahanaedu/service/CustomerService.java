@@ -45,4 +45,9 @@ public class CustomerService {
         customerRepository.deleteById(id);
         return true;
     }
+    public String getlatestId() {
+        Customer customer = customerRepository.findTopByOrderByIdDesc();
+        return (customer != null) ? customer.getAccountNumber() : null;
+    }
+
 } 

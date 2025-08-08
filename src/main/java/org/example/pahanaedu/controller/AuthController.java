@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://localhost:14192")
 @RestController
 @RequestMapping(Routes.AUTH_BASE)
 public class AuthController {
@@ -36,7 +36,7 @@ public class AuthController {
 
     @PostMapping(Routes.REGISTER)
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        String result = authService.register(request.getUsername(), request.getPassword(), request.getRole());
+        String result = authService.register(request.getUsername(), request.getPassword(),request.getEmail());
         boolean success = result.equals("User registered successfully");
         Map<String, Object> response = new HashMap<>();
         response.put("success", success);
@@ -88,5 +88,10 @@ public class AuthController {
         } else {
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    @PostMapping(Routes.LOGOUT)
+    public ResponseEntity<?> logout() {
+        return ResponseEntity.ok(Map.of("success", true, "message", "Logged out successfully"));
     }
 } 

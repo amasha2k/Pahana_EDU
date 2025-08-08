@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:14192")
 @RestController
 @RequestMapping(Routes.ITEM_BASE)
 public class ItemController {

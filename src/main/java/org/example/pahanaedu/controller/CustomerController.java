@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:14192")
 @RestController
 @RequestMapping(Routes.CUSTOMER_BASE)
 public class CustomerController {
@@ -45,4 +46,28 @@ public class CustomerController {
             return ResponseEntity.status(404).body(Map.of("success", false, "message", "Customer not found"));
         }
     }
+    @GetMapping(Routes.GET_LATEST)
+    public ResponseEntity<?> getLatest() {
+        try {
+            String id = customerService.getlatestId();
+            if (id != null) {
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "id", id,
+                        "latestId", id
+                ));
+            } else {
+                return ResponseEntity.status(404).body(Map.of(
+                        "success", false,
+                        "message", "Customer not found"
+                ));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of(
+                    "success", false,
+                    "message", "Something went wrong"
+            ));
+        }
+    }
+
 } 

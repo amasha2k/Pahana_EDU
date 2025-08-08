@@ -27,14 +27,15 @@ public class AuthService {
         return false;
     }
 
-    public String register(String username, String password, String role) {
+    public String register(String username, String password,String email) {
         if (userRepository.findByUsername(username) != null) {
             return "Username already exists";
         }
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
-        user.setRole(role);
+        user.setEmail(email);
+        user.setRole("USER");
         userRepository.save(user);
         return "User registered successfully";
     }
